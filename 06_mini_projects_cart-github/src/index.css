@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,500");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Ubuntu", sans-serif;
+}
+input,
+button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  outline: none;
+}
+.container {
+  max-width: 90%;
+  margin: auto;
+  padding-top: 1rem;
+}
+
+.form-box {
+  padding: 1rem 2rem;
+  background: hsl(0, 0%, 89%);
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+.form-box__item {
+  display: flex;
+}
+input {
+  border: 1px solid lightslategray;
+  background: white;
+  padding: 6px;
+  flex: 1;
+  font-size: 1.2rem;
+}
+button {
+  background: lightslategray;
+  color: white;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 0 12px;
+}
+button:hover {
+  background: lightseagreen;
+}
+.delete-button {
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+.cart-box {
+  display: grid;
+  grid-template-columns: repeat(3, 33.33333%);
+  grid-gap: 1rem;
+}
+
+.cart {
+  display: grid;
+  grid-gap: 10px;
+  margin-bottom: 1rem;
+  grid-template-columns: 120px auto;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+    "img meta1"
+    "img meta2"
+    "img meta2";
+}
+.cart img {
+  grid-area: img;
+  width: 100%;
+  max-width: 100%;
+  border: 5px solid white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+.cart h3 {
+  grid-area: meta1;
+  font-weight: 500;
+}
+.cart p {
+  grid-area: meta2;
+}
