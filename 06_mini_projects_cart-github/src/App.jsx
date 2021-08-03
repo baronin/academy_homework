@@ -1,7 +1,7 @@
-import {useState, useCallback} from "react"
+import {useState, useCallback, useMemo} from "react"
 import CartList from "./components/cart/CartList"
 import Form from "./components/cart/Form"
-import {fetchUser, sleep} from "./utils"
+import {fetchUser} from "./utils"
 import {BsThreeDots} from "react-icons/bs"
 import AppContext from "./contexts/AppContext"
 
@@ -18,7 +18,7 @@ function App() {
     }
     setStatus("pending")
     setError(null)
-    await sleep()
+    // await sleep()
     fetchUser(userName)
       .then(item => {
         setData(x => [...x, item])
@@ -34,14 +34,17 @@ function App() {
       return false
     }
     setData(data.filter(item => item.id !== itemId))
-  }, [])
+  }, [data]);
+
+  const value = useMemo(() => ({deleteItem}), [deleteItem])
+
   return (
     <div className="container">
       <Form
         addItem={addItem} isDisabled={status === "pending"} />
       {status === "pending" && <h1>loading...<BsThreeDots /></h1>}
       {error === "rejected" && <h1>Error...{error.message}</h1>}
-      <AppContext.Provider value={{deleteItem}}>
+      <AppContext.Provider value={value}>
         <CartList items={data} />
       </AppContext.Provider>
     </div>
