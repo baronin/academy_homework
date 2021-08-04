@@ -1,7 +1,7 @@
 import {useState, memo} from "react"
-import PropTypes from "prop-types"
 import styled from '@emotion/styled'
-
+import {useAddItem} from "../../contexts/AppContext"
+import {BsThreeDots} from "react-icons/bs"
 
 export const Button = styled.button({
     color: 'turquoise',
@@ -14,9 +14,11 @@ export const Button = styled.button({
   }),
 );
 
-const Form = ({addItem, isDisabled}) => {
-  const [val, setVal] = useState("")
-  // console.log(val)
+const Form = () => {
+  const [val, setVal] = useState("");
+  const {addItem, state} = useAddItem();
+  const isDisabled = state.status === 'pending';
+
   function handleChange(e) {
     setVal(e.target.value)
     console.log(val)
@@ -32,18 +34,14 @@ const Form = ({addItem, isDisabled}) => {
       <div className="form-box">
         <div className="form-box__item">
           <input value={val} type="text" onChange={handleChange} />
-          <Button disabled={isDisabled} style={isDisabled ? {background: 'red'} : null}>
+          <Button disabled={isDisabled}>
             Add user
+            {isDisabled && <span>spinner<BsThreeDots/></span>}
           </Button>
         </div>
       </div>
     </form>
   )
-}
-
-Form.propTypes = {
-  addItem: PropTypes.func.isRequired,
-  isDisabled: PropTypes.bool.isRequired
 }
 
 export default memo(Form);

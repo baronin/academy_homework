@@ -1,19 +1,15 @@
 import {memo} from "react"
-
-import PropTypes from 'prop-types'
+import {useAppContext} from "../../contexts/AppContext"
 import Cart from './Cart'
 
-const CartList =  ({items}) => {
+const CartList =  () => {
+    const state = useAppContext();
     console.log("rerender cartList");
     return (
         <div className="cart-box">
-            {items.map(item => <Cart item={item} key={item.id} />)}
+            {state.items.map(item => <Cart item={item} key={item.id} />)}
         </div>
     )
-}
-
-CartList.propTypes = {
-    items: PropTypes.array.isRequired,
 }
 
 CartList.defaultProps = {

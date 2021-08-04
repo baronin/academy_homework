@@ -1,10 +1,10 @@
-import {memo, useContext} from "react"
+import {memo} from "react"
 import PropTypes from "prop-types"
-import AppContext from "../../contexts/AppContext"
+import {useDeleteItem} from "../../contexts/AppContext"
 
 const Cart = ({item}) => {
   console.log("rerender cart", item.id)
-  const {deleteItem} = useContext(AppContext)
+  const deleteItem = useDeleteItem();
   return (
     <div className="cart">
       <h3>{item.name}</h3>
