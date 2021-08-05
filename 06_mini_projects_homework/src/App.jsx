@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import NewItem from './components/NewItem';
 import ListItems from './components/ListItems';
-import { defaultState } from './data';
+import {defaultState} from './data';
+import AppContext from './Contexts/AppContexts';
 
 const App = () => {
+  console.log("RERENDER")
   const [items, setItems] = useState(defaultState);
   const packedItems = items.filter((item) => item.packed);
   const unpackedItems = items.filter((item) => !item.packed);
@@ -24,49 +26,47 @@ const App = () => {
       items.map((item) =>
         item.id !== toggledId.id
           ? item
-          : { ...toggledId, packed: !toggledId.packed }
+          : {...toggledId, packed: !toggledId.packed}
       )
     );
   };
 
   const deleteItems = (e) => {
     e.preventDefault();
-    const newItems = items.map((item) => ({ ...item, packed: false }));
+    const newItems = items.map((item) => ({...item, packed: false}));
     setItems(newItems);
   };
 
   return (
     <div className='container py-3'>
-      <NewItem addItem={addItem} />
-      <div className='row'>
-        <div className='col-md-5'>
-          {unpackedItems && (
-            <ListItems
-              toggleTask={toggleTask}
-              removeItem={removeItem}
-              title='Unpacked Items'
-              items={unpackedItems}
-            />
-          )}
-        </div>
-        <div className='offset-md-2 col-md-5'>
-          {packedItems && (
-            <ListItems
-              toggleTask={toggleTask}
-              removeItem={removeItem}
-              title='Packed Items'
-              items={packedItems}
-            />
-          )}
+      <NewItem addItem={addItem}/>
+      <AppContext.Provider value={{removeItem, toggleTask}}>
+        <div className='row'>
+          <div className='col-md-5'>
+            {unpackedItems && (
+              <ListItems
+                title='Unpacked Items'
+                items={unpackedItems}
+              />
+            )}
+          </div>
+          <div className='offset-md-2 col-md-5'>
+            {packedItems && (
+              <ListItems
+                title='Packed Items'
+                items={packedItems}
+              />
+            )}
 
-          <button
-            className='btn btn-danger btn-lg btn-block'
-            onClick={deleteItems}
-          >
-            Mark All As Unpacked
-          </button>
+            <button
+              className='btn btn-danger btn-lg btn-block'
+              onClick={deleteItems}
+            >
+              Mark All As Unpacked
+            </button>
+          </div>
         </div>
-      </div>
+      </AppContext.Provider>
     </div>
   );
 };

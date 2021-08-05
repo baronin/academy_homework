@@ -3,7 +3,7 @@ import Item from './Item';
 import Filter from './Filter';
 import PropTypes from 'prop-types';
 
-const ListItems = ({ title, items, removeItem, toggleTask }) => {
+const ListItems = ({ title, items }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const updateFilter = (e) => setSearchTerm(e);
@@ -20,8 +20,6 @@ const ListItems = ({ title, items, removeItem, toggleTask }) => {
             )
             .map((v) => (
               <Item
-                toggleTask={toggleTask}
-                removeItem={removeItem}
                 key={v.id}
                 item={v}
               />
@@ -33,9 +31,7 @@ const ListItems = ({ title, items, removeItem, toggleTask }) => {
 
 ListItems.propTypes = {
   title: PropTypes.string.isRequired,
-  items: PropTypes.array.isRequired,
-  removeItem: PropTypes.func.isRequired,
-  toggleTask: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired
 };
 
 export default ListItems;
