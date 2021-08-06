@@ -1,34 +1,28 @@
+import {memo} from "react";
 import './Item.css';
 import PropTypes from 'prop-types';
-import AppContexts from "../Contexts/AppContexts";
+import {useRemoveItem, useToggleChecked} from "../Contexts/AppContexts";
+
 const Item = ({ item }) => {
+  const toggleTask = useToggleChecked();
+  const removeItem = useRemoveItem();
   return (
-    <AppContexts.Consumer>
-      {({toggleTask, removeItem}) => (
         <li className='item-box'>
           <div className='form-check'>
             <input
               className='form-check-input'
               type='checkbox'
               checked={item.packed}
-              onChange={() => toggleTask(item)}
+              onChange={() => toggleTask(item.id)}
               id={item.id}
             />
-            <label className='form-check-label' htmlFor={item.id}>
-              {' '}
-              {item.value}
-            </label>
+            <label className='form-check-label' htmlFor={item.id}>{item.value}</label>
           </div>
-          <button
-            className='btn btn-secondary btn-sm'
-            onClick={() => removeItem(item.id)}
-          >
+          <button className='btn btn-secondary btn-sm' onClick={() => removeItem(item.id)}>
             Remove
           </button>
         </li>
-      )}
-    </AppContexts.Consumer>
-  );
+      )
 };
 
 Item.propTypes = {
@@ -39,4 +33,4 @@ Item.propTypes = {
   })
 };
 
-export default Item;
+export default memo(Item);

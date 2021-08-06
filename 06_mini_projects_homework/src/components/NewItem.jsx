@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import { useState, memo } from 'react';
 import { generate as id } from 'shortid';
+import {useAddItem} from "../Contexts/AppContexts";
 
-const NewItem = ({ addItem }) => {
+const NewItem = () => {
   const [value, setValue] = useState('');
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const addItem = useAddItem();
+  const handleChange = ({target}) => {
+    setValue(target.value);
   };
 
   const handleSubmit = (event) => {
@@ -16,6 +16,7 @@ const NewItem = ({ addItem }) => {
       id: id(),
       packed: false,
     });
+    setValue('');
   };
 
   return (
@@ -37,8 +38,4 @@ const NewItem = ({ addItem }) => {
   );
 };
 
-NewItem.propTypes = {
-  addItem: PropTypes.func.isRequired,
-};
-
-export default NewItem;
+export default memo(NewItem);

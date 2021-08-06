@@ -1,7 +1,7 @@
 import React from "react";
-import { render } from "react-dom";
-
+import {AppContextProvider} from "./Contexts/AppContexts";
 import App from "./App";
+import { render } from "react-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
-render(<App />, document.getElementById("root"));
+render(<AppContextProvider><App /></AppContextProvider>, document.getElementById("root"));
